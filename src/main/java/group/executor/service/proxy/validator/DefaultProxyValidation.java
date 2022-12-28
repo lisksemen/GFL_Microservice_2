@@ -26,11 +26,6 @@ public class DefaultProxyValidation implements ProxyValidation {
                 if (call.execute().isSuccessful()){
                     return true;
                 }
-//                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(proxy);
-//                boolean usingProxy = urlConnection.usingProxy();
-//                if (urlConnection.getResponseCode() == 200 && usingProxy){
-//                    return true;
-//                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
