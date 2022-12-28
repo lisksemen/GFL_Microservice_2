@@ -12,18 +12,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultProxyValidationTest {
     private ProxyValidation proxyValidation;
-    private ProxyConfigHolder proxyConfigHolder;
+    private ProxyConfigHolder proxyConfigHolderWorking;
+    private ProxyConfigHolder proxyConfigHolderNotWorking;
     @BeforeEach
     void setUp() {
-        proxyConfigHolder = new ProxyConfigHolder(new ProxyNetworkConfig("157.92.32.83",8080),
+        proxyConfigHolderWorking = new ProxyConfigHolder(new ProxyNetworkConfig("157.92.32.83",8080),
+                new ProxyCredentials());
+        proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("157.92.32.83",8),
                 new ProxyCredentials());
         proxyValidation = new DefaultProxyValidation();
     }
 
     @Test
     public void validateProxy(){
-        boolean result = proxyValidation.validateProxy(proxyConfigHolder);
-        System.out.println("Connection " + result);
-        assertTrue(result);
+        boolean result1 = proxyValidation.validateProxy(proxyConfigHolderWorking);
+        boolean result2 = proxyValidation.validateProxy(proxyConfigHolderNotWorking);
+        assertTrue(result1);
+        assertFalse(result2);
     }
 }
