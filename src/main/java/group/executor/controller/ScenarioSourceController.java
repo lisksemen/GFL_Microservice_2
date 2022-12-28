@@ -14,7 +14,7 @@ public class ScenarioSourceController {
 
     private ScenarioSourceQueueHandler scenarioSourceQueueHandler;
 
-    @PostMapping
+    @PostMapping("/scenario/add")
     public ResponseEntity<?> addScenario(@RequestBody Scenario scenario) {
         scenarioSourceQueueHandler.addScenario(scenario);
 
