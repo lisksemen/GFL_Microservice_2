@@ -1,8 +1,9 @@
-package group.executor.service;
+package group.executor.service.handler;
 
 import group.executor.model.Scenario;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -16,7 +17,7 @@ public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHan
     }
 
     @Override
-    public synchronized Scenario pollScenario() {
-        return scenarios.poll();
+    public synchronized Optional<Scenario> pollScenario() {
+        return Optional.ofNullable(scenarios.poll());
     }
 }
