@@ -15,11 +15,18 @@
     <description>GFL_Microservice_2</description>
     <properties>
         <java.version>11</java.version>
+        <okhttp-version>2.7.5</okhttp-version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp-version}</version>
         </dependency>
 
         <dependency>
