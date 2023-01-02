@@ -30,9 +30,9 @@ public class DefaultProxyValidationTest {
 
     @Test
     public void validateProxy(){
-        boolean result1 = false ;
+        boolean result1 = false;
         int count = 0;
-        while (!result1 || count > 5){
+        while (!result1 || count < 5){
             proxySourceUrl.sendRequest();
             result1 = proxyValidation.validateProxy(proxySourceQueueHandler.pollProxy().get());
             count++;
