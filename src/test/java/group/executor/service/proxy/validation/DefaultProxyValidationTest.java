@@ -31,9 +31,11 @@ public class DefaultProxyValidationTest {
     @Test
     public void validateProxy(){
         boolean result1 = false ;
-        while (!result1){
+        int count = 0;
+        while (!result1 || count > 5){
             proxySourceUrl.sendRequest();
             result1 = proxyValidation.validateProxy(proxySourceQueueHandler.pollProxy().get());
+            count++;
         }
         boolean result2 = proxyValidation.validateProxy(proxyConfigHolderNotWorking);
         assertTrue(result1);
