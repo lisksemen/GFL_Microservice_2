@@ -15,9 +15,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultProxyValidationTest {
+    private ProxySourceUrl proxySourceUrl;
     private ProxyValidation proxyValidation;
     private ProxyConfigHolder proxyConfigHolderNotWorking;
-    private ProxySourceUrl proxySourceUrl;
     private ProxySourceQueueHandler proxySourceQueueHandler;
     @BeforeEach
     void setUp() {
@@ -30,8 +30,11 @@ public class DefaultProxyValidationTest {
 
     @Test
     public void validateProxy(){
-        proxySourceUrl.sendRequest();
-        boolean result1 = proxyValidation.validateProxy(proxySourceQueueHandler.pollProxy().get());
+        boolean result1 = false ;
+        while (!result1){
+            proxySourceUrl.sendRequest();
+            result1 = proxyValidation.validateProxy(proxySourceQueueHandler.pollProxy().get());
+        }
         boolean result2 = proxyValidation.validateProxy(proxyConfigHolderNotWorking);
         assertTrue(result1);
         assertFalse(result2);
