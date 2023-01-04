@@ -6,9 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
+import group.executor.service.handler.DefaultProxySourceQueueHandler;
 import group.executor.service.handler.ProxySourceQueueHandler;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,19 +26,17 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class DefaultProxySourceUrl implements ProxySourceUrl {
     private static ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
 
     public DefaultProxySourceUrl(ProxySourceQueueHandler proxySourceQueueHandler) {
         this.proxySourceQueueHandler = proxySourceQueueHandler;
     }
+
     @Async
     @Override
     @Scheduled(fixedRate = 5000)
     public void sendRequest() {
-        sendRequestWithCallback(null);
-    }
-
-    public void sendRequestWithCallback(Runnable callback) {
         try {
             OkHttpClient client = new OkHttpClient.Builder()
                     .readTimeout(15, TimeUnit.SECONDS)
@@ -45,9 +48,6 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
                     .build();
             String response = client.newCall(request).execute().body().string();
             proxySourceQueueHandler.addProxy(getProxyFromResponse(response));
-            if (callback != null){
-                 callback.run();
-            }
         } catch (IOException e) {
             throw new RuntimeException("Message: " + e.getMessage());
         }
