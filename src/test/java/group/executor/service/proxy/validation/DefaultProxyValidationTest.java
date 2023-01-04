@@ -1,5 +1,6 @@
 package group.executor.service.proxy.validation;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
@@ -22,7 +23,7 @@ public class DefaultProxyValidationTest {
     @BeforeEach
     void setUp() {
         proxySourceQueueHandler = new DefaultProxySourceQueueHandler();
-        proxySourceUrl = new DefaultProxySourceUrl(proxySourceQueueHandler);
+        proxySourceUrl = new DefaultProxySourceUrl(new ObjectMapper(), proxySourceQueueHandler);
         proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5",8),
                 new ProxyCredentials());
         proxyValidation = new DefaultProxyValidation();
