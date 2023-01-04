@@ -17,8 +17,9 @@
         <java.version>11</java.version>
         <okhttp-version>4.10.0</okhttp-version>
         <jackson-databind.version>2.14.0</jackson-databind.version>
-        <mockito-core-version>4.8.0</mockito-core-version>
+        <mockito-core-version>4.11.0</mockito-core-version>
         <awaitility-version>4.2.0</awaitility-version>
+        <solace-messaging-client-version>1.1.0</solace-messaging-client-version>
     </properties>
     <dependencies>
         <dependency>
@@ -66,6 +67,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.solace</groupId>
+            <artifactId>solace-messaging-client</artifactId>
+            <version>${solace-messaging-client-version}</version>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package group.executor.config;
+package group.executor.config.properties;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
