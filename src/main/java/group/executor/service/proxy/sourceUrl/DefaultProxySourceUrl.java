@@ -6,11 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
-import group.executor.service.handler.DefaultProxySourceQueueHandler;
 import group.executor.service.handler.ProxySourceQueueHandler;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +21,12 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class DefaultProxySourceUrl implements ProxySourceUrl {
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
     @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
 
-    public DefaultProxySourceUrl(ProxySourceQueueHandler proxySourceQueueHandler) {
+    public DefaultProxySourceUrl(ObjectMapper objectMapper,ProxySourceQueueHandler proxySourceQueueHandler) {
+        this.objectMapper = objectMapper;
         this.proxySourceQueueHandler = proxySourceQueueHandler;
     }
 
