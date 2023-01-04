@@ -12,9 +12,9 @@ import java.net.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class DefaultProxyValidation implements ProxyValidation {
+public class DefaultProxyValidator implements ProxyValidator {
     @Override
-    public boolean validateProxy(ProxyConfigHolder proxyConfigHolder) {
+    public boolean isValid(ProxyConfigHolder proxyConfigHolder) {
         if (proxyConfigHolder != null){
             try {
                 ProxyNetworkConfig proxyNetworkConfig = proxyConfigHolder.getProxyNetworkConfig();

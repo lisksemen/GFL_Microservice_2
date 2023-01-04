@@ -3,6 +3,7 @@ package group.executor.config;
 import com.solace.messaging.MessagingService;
 import com.solace.messaging.config.SolaceProperties;
 import com.solace.messaging.config.profile.ConfigurationProfile;
+import com.solace.messaging.publisher.DirectMessagePublisher;
 import group.executor.config.properties.MessageVPNPropertiesConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,5 +28,14 @@ public class MessageVPNConfig {
                 .fromProperties(properties)
                 .build()
                 .connect();
+    }
+
+    @Bean
+    public DirectMessagePublisher directMessagePublisher() {
+        return messagingService()
+                .createDirectMessagePublisherBuilder()
+                .onBackPressureWait(1)
+                .build()
+                .start();
     }
 }
