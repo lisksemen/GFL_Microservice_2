@@ -1,0 +1,28 @@
+[ {
+  "proxyNetworkConfig" : {
+    "port" : 0,
+    "hostName" : "host_name_0"
+  },
+  "proxyCredentials" : {
+    "username" : "user_0",
+    "password" : "123"
+  }
+}, {
+  "proxyNetworkConfig" : {
+    "port" : 1,
+    "hostName" : "host_name_1"
+  },
+  "proxyCredentials" : {
+    "username" : "user_1",
+    "password" : "456"
+  }
+}, {
+  "proxyNetworkConfig" : {
+    "port" : 2,
+    "hostName" : "host_name_2"
+  },
+  "proxyCredentials" : {
+    "username" : "user_2",
+    "password" : "789"
+  }
+} ]
