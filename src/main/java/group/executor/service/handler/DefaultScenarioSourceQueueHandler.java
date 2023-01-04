@@ -1,8 +1,11 @@
 package group.executor.service.handler;
 
+import group.executor.model.ProxyConfigHolder;
 import group.executor.model.Scenario;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -19,5 +22,12 @@ public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHan
     @Override
     public synchronized Optional<Scenario> pollScenario() {
         return Optional.ofNullable(scenarios.poll());
+    }
+
+    @Override
+    public Collection<Scenario> pollAllScenario() {
+        HashSet<Scenario> result = new HashSet<>(scenarios);
+        scenarios.clear();
+        return result;
     }
 }
