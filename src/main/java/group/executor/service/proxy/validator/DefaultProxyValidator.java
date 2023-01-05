@@ -8,18 +8,20 @@ import okhttp3.Response;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class DefaultProxyValidation implements ProxyValidation {
+public class DefaultProxyValidator implements ProxyValidator {
     @Override
-    public boolean validateProxy(ProxyConfigHolder proxyConfigHolder) {
-        if (proxyConfigHolder != null){
+    public boolean isValid(ProxyConfigHolder proxyConfigHolder) {
+        if (proxyConfigHolder != null) {
             try {
                 ProxyNetworkConfig proxyNetworkConfig = proxyConfigHolder.getProxyNetworkConfig();
                 Proxy proxy = new Proxy(Proxy.Type.HTTP,
-                        new InetSocketAddress(proxyNetworkConfig.getHostName(),proxyNetworkConfig.getPort()));
+                        new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
                 OkHttpClient client = new OkHttpClient.Builder()
                         .proxy(proxy)
                         .readTimeout(15, TimeUnit.SECONDS)

@@ -6,14 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
-import group.executor.service.handler.DefaultProxySourceQueueHandler;
 import group.executor.service.handler.ProxySourceQueueHandler;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -24,18 +21,20 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@PropertySource("classpath:schedule.properties")
 public class DefaultProxySourceUrl implements ProxySourceUrl {
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
 
-    public DefaultProxySourceUrl(ProxySourceQueueHandler proxySourceQueueHandler) {
+    public DefaultProxySourceUrl(ObjectMapper objectMapper, ProxySourceQueueHandler proxySourceQueueHandler) {
+        this.objectMapper = objectMapper;
         this.proxySourceQueueHandler = proxySourceQueueHandler;
     }
 
     @Async
     @Override
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRateString = "${sourceUrl.fixedRate}")
     public void sendRequest() {
         try {
             OkHttpClient client = new OkHttpClient.Builder()
@@ -55,15 +54,16 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
 
     private ProxyConfigHolder getProxyFromResponse(String response) throws JsonProcessingException {
         ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig();
-        Map<String, Object> resultResponse = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> resultResponse = objectMapper.readValue(response, new TypeReference<>() {
+        });
         for (String s : resultResponse.keySet()) {
-            if (s.contains("host")){
+            if (s.contains("host")) {
                 proxyNetworkConfig.setHostName(resultResponse.get(s).toString());
-            } else if (s.contains("port")){
+            } else if (s.contains("port")) {
                 int port = Integer.parseInt(resultResponse.get(s).toString());
                 proxyNetworkConfig.setPort(port);
             }
         }
-        return new ProxyConfigHolder(proxyNetworkConfig, new ProxyCredentials("empty","empty"));
+        return new ProxyConfigHolder(proxyNetworkConfig, new ProxyCredentials("empty", "empty"));
     }
 }
