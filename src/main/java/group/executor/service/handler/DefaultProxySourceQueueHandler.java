@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
@@ -27,6 +26,16 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
         HashSet<ProxyConfigHolder> result = new HashSet<>(proxyQueue);
         proxyQueue.clear();
         return result;
+    }
+
+    @Override
+    public Queue<ProxyConfigHolder> getProxyQueue(){
+        return proxyQueue;
+    }
+
+    @Override
+    public boolean removeProxy(ProxyConfigHolder proxyConfigHolder){
+        return proxyQueue.remove(proxyConfigHolder);
     }
 
     @Override
