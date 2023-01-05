@@ -10,4 +10,6 @@ public interface ScenarioSourceQueueHandler {
     Optional<Scenario> pollScenario();
 
     Collection<Scenario> pollAllScenario();
+
+    boolean isEmpty();
 }

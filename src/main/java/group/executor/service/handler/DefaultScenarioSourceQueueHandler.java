@@ -30,4 +30,11 @@ public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHan
         scenarios.clear();
         return result;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return scenarios.isEmpty();
+    }
+
+
 }

@@ -28,4 +28,9 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
         proxyQueue.clear();
         return result;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return proxyQueue.isEmpty();
+    }
 }

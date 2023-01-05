@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class DefaultProxySourceUrl implements ProxySourceUrl {
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
 

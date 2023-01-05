@@ -10,4 +10,6 @@ public interface ProxySourceQueueHandler {
     Optional<ProxyConfigHolder> pollProxy();
 
     Collection<ProxyConfigHolder> pollAllProxy();
+
+    boolean isEmpty();
 }
