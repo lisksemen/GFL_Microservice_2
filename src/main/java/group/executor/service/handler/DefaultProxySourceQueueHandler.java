@@ -29,6 +29,16 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     }
 
     @Override
+    public Queue<ProxyConfigHolder> getProxyQueue(){
+        return proxyQueue;
+    }
+
+    @Override
+    public boolean removeProxy(ProxyConfigHolder proxyConfigHolder){
+        return proxyQueue.remove(proxyConfigHolder);
+    }
+
+    @Override
     public boolean isEmpty() {
         return proxyQueue.isEmpty();
     }

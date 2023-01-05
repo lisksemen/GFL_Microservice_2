@@ -10,6 +10,7 @@ import group.executor.service.handler.ProxySourceQueueHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@PropertySource("classpath:schedule.properties")
 public class DefaultProxySourceUrl implements ProxySourceUrl {
     private final ObjectMapper objectMapper;
     @Autowired
@@ -32,7 +34,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
 
     @Async
     @Override
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRateString = "${sourceUrl.fixedRate}")
     public void sendRequest() {
         try {
             OkHttpClient client = new OkHttpClient.Builder()
