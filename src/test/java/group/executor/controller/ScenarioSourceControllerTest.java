@@ -1,6 +1,6 @@
 package group.executor.controller;
 
-import group.executor.controller.convertor.ConvertorObjectToJSON;
+import group.executor.controller.convertor.ConvertorObjectToString;
 import group.executor.model.*;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class ScenarioSourceControllerTest {
     @Test
     void addProxy() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/scenario/add")
-                        .content(ConvertorObjectToJSON
+                        .content(ConvertorObjectToString
                                 .asJsonString(getScenario()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

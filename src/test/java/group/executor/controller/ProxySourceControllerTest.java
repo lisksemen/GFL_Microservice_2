@@ -1,6 +1,6 @@
 package group.executor.controller;
 
-import group.executor.controller.convertor.ConvertorObjectToJSON;
+import group.executor.controller.convertor.ConvertorObjectToString;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
@@ -26,7 +26,7 @@ class ProxySourceControllerTest {
     @Test
     void addProxy() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/proxy/add")
-                        .content(ConvertorObjectToJSON
+                        .content(ConvertorObjectToString
                                 .asJsonString(new ProxyConfigHolder(new ProxyNetworkConfig("hostName", 8080),
                                         new ProxyCredentials("username", "password"))))
                         .contentType(MediaType.APPLICATION_JSON)

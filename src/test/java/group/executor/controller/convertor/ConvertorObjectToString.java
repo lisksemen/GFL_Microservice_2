@@ -2,7 +2,7 @@ package group.executor.controller.convertor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ConvertorObjectToJSON {
+public class ConvertorObjectToString {
 
    public static String asJsonString(final Object obj) {
         try {
