@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ScenarioSourceQueueHandler {
     void addScenario(Scenario scenario);
+
     Optional<Scenario> pollScenario();
 
     Collection<Scenario> pollAllScenario();

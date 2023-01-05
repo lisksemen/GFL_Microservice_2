@@ -21,7 +21,7 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     }
 
     @Override
-    public void addProxy(ProxyConfigHolder ... proxyConfigHolder) {
+    public void addProxy(ProxyConfigHolder... proxyConfigHolder) {
         Collections.addAll(proxyQueue, proxyConfigHolder);
     }
 

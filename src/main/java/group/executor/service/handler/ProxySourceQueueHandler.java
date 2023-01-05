@@ -7,7 +7,8 @@ import java.util.Optional;
 import java.util.Queue;
 
 public interface ProxySourceQueueHandler {
-    void addProxy(ProxyConfigHolder ... proxyConfigHolder);
+    void addProxy(ProxyConfigHolder... proxyConfigHolder);
+
     Optional<ProxyConfigHolder> pollProxy();
 
     Collection<ProxyConfigHolder> pollAllProxy();
