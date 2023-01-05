@@ -1,12 +1,10 @@
 package group.executor.service.handler;
 
 import group.executor.model.ProxyConfigHolder;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
@@ -14,7 +12,7 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     private final Queue<ProxyConfigHolder> proxyQueue = new LinkedBlockingQueue<>();
 
     @Override
-    public void addProxy(ProxyConfigHolder ... proxyConfigHolder) {
+    public void addProxy(ProxyConfigHolder... proxyConfigHolder) {
         Collections.addAll(proxyQueue, proxyConfigHolder);
     }
 

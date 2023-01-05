@@ -3,7 +3,6 @@ package group.executor.service.publisher;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solacesystems.jcsmp.*;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.Scenario;
 import group.executor.service.handler.ProxySourceQueueHandler;
@@ -21,8 +20,6 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class GeneralVPNFacadePublisher implements VPNPublisher {
-
-    private final ProxySourceQueueHandler proxySourceQueueHandler;
 
     private final ScenarioSourceQueueHandler scenarioSourceQueueHandler;
 

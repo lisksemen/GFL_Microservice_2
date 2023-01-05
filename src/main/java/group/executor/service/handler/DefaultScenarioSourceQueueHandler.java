@@ -1,6 +1,5 @@
 package group.executor.service.handler;
 
-import group.executor.model.ProxyConfigHolder;
 import group.executor.model.Scenario;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Service
-public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHandler{
+public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHandler {
     private final Queue<Scenario> scenarios = new LinkedBlockingQueue<>();
 
     @Override

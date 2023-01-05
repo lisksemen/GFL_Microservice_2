@@ -25,7 +25,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
     @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
 
-    public DefaultProxySourceUrl(ObjectMapper objectMapper,ProxySourceQueueHandler proxySourceQueueHandler) {
+    public DefaultProxySourceUrl(ObjectMapper objectMapper, ProxySourceQueueHandler proxySourceQueueHandler) {
         this.objectMapper = objectMapper;
         this.proxySourceQueueHandler = proxySourceQueueHandler;
     }
@@ -52,15 +52,16 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
 
     private ProxyConfigHolder getProxyFromResponse(String response) throws JsonProcessingException {
         ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig();
-        Map<String, Object> resultResponse = objectMapper.readValue(response, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> resultResponse = objectMapper.readValue(response, new TypeReference<>() {
+        });
         for (String s : resultResponse.keySet()) {
-            if (s.contains("host")){
+            if (s.contains("host")) {
                 proxyNetworkConfig.setHostName(resultResponse.get(s).toString());
-            } else if (s.contains("port")){
+            } else if (s.contains("port")) {
                 int port = Integer.parseInt(resultResponse.get(s).toString());
                 proxyNetworkConfig.setPort(port);
             }
         }
-        return new ProxyConfigHolder(proxyNetworkConfig, new ProxyCredentials("empty","empty"));
+        return new ProxyConfigHolder(proxyNetworkConfig, new ProxyCredentials("empty", "empty"));
     }
 }

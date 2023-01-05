@@ -13,27 +13,29 @@ import group.executor.service.proxy.validator.ProxyValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DefaultProxyValidatorTest {
     private ProxySourceUrl proxySourceUrl;
     private ProxyValidator proxyValidator;
     private ProxyConfigHolder proxyConfigHolderNotWorking;
     private ProxySourceQueueHandler proxySourceQueueHandler;
+
     @BeforeEach
     void setUp() {
         proxySourceQueueHandler = new DefaultProxySourceQueueHandler();
         proxySourceUrl = new DefaultProxySourceUrl(new ObjectMapper(), proxySourceQueueHandler);
-        proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5",8),
+        proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5", 8),
                 new ProxyCredentials());
         proxyValidator = new DefaultProxyValidator();
     }
 
     @Test
-    public void validateProxy(){
+    public void validateProxy() {
         boolean result1 = false;
         int count = 0;
-        while (!result1 || count < 5){
+        while (!result1 || count < 5) {
             proxySourceUrl.sendRequest();
             result1 = proxyValidator.isValid(proxySourceQueueHandler.pollProxy().get());
             count++;
