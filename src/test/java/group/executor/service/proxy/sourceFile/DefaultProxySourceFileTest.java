@@ -1,6 +1,5 @@
 package group.executor.service.proxy.sourceFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.ProxyCredentials;
 import group.executor.model.ProxyNetworkConfig;
@@ -23,21 +22,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DefaultProxySourceFileTest {
     private ProxySourceFile proxySourceFile;
     private ProxySourceQueueHandler queueHandler;
-    private ObjectMapper mapper;
 
-    private File source;
     private List<ProxyConfigHolder> listProxyLikeInFile;
 
     @Autowired
-    private void getBeans(ProxySourceQueueHandler queueHandler, ObjectMapper mapper) {
+    private void getBeans(ProxySourceQueueHandler queueHandler, ProxySourceFile proxySourceFile) {
         this.queueHandler = queueHandler;
-        this.mapper = mapper;
+        this.proxySourceFile = proxySourceFile;
     }
 
     @BeforeEach
     void setUp() {
-        source = new File("testProxy.json");
-
         listProxyLikeInFile = List.of(
                 new ProxyConfigHolder(
                         new ProxyNetworkConfig("host_name_0", 0),
@@ -50,12 +45,12 @@ class DefaultProxySourceFileTest {
                         new ProxyCredentials("user_2", "789"))
         );
 
-        proxySourceFile = new DefaultProxySourceFile(queueHandler, mapper);
+        proxySourceFile.setSourceFile(new File("testProxy.json"));
     }
 
     @Test
     void testExtractProxy() throws IOException {
-        proxySourceFile.extractProxy(source);
+        proxySourceFile.extractProxy();
 
         assertEquals(listProxyLikeInFile.get(0), queueHandler.pollProxy().orElseThrow());
         assertEquals(listProxyLikeInFile.get(1), queueHandler.pollProxy().orElseThrow());
