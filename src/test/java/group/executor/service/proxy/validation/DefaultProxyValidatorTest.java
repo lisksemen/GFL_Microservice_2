@@ -22,7 +22,7 @@ public class DefaultProxyValidatorTest {
     private ProxySourceQueueHandler proxySourceQueueHandler;
     @BeforeEach
     void setUp() {
-        proxySourceQueueHandler = new DefaultProxySourceQueueHandler();
+        proxySourceQueueHandler = new DefaultProxySourceQueueHandler(new DefaultProxyValidator());
         proxySourceUrl = new DefaultProxySourceUrl(new ObjectMapper(), proxySourceQueueHandler);
         proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5",8),
                 new ProxyCredentials());

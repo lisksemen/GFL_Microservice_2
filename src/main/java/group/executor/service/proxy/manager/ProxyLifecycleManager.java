@@ -5,7 +5,6 @@ import group.executor.model.ProxyConfigHolder;
 import java.util.Optional;
 
 public interface ProxyLifecycleManager {
-    void removeInvalidProxy();
 
     Optional<ProxyConfigHolder> getFirstValidProxy();
 }

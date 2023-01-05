@@ -13,6 +13,5 @@ public interface ProxySourceQueueHandler {
     Collection<ProxyConfigHolder> pollAllProxy();
 
     boolean isEmpty();
-    Queue<ProxyConfigHolder> getProxyQueue();
-    boolean removeProxy(ProxyConfigHolder proxyConfigHolder);
+    void removeInvalidProxy();
 }

@@ -13,28 +13,12 @@ import java.util.Queue;
 
 @Service
 @AllArgsConstructor
-@PropertySource("classpath:schedule.properties")
 public class DefaultProxyLifecycleManager implements ProxyLifecycleManager {
 
     private final ProxySourceQueueHandler proxySourceQueueHandler;
 
     private final ProxyValidator proxyValidator;
 
-    @Override
-    @Scheduled(fixedRateString = "${manager.fixedRate}")
-    public void removeInvalidProxy() {
-        synchronized (proxySourceQueueHandler){
-            if(!proxySourceQueueHandler.isEmpty()){
-                Queue<ProxyConfigHolder> proxyQueue = proxySourceQueueHandler.getProxyQueue();
-                for (ProxyConfigHolder proxyConfigHolder : proxyQueue) {
-                    boolean valid = proxyValidator.isValid(proxyConfigHolder);
-                    if (!valid){
-                        proxySourceQueueHandler.removeProxy(proxyConfigHolder);
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public Optional<ProxyConfigHolder> getFirstValidProxy() {
