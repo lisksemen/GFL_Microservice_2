@@ -1,6 +1,8 @@
 package group.executor.service.publisher;
 
+import com.solacesystems.jcsmp.JCSMPException;
+
 public interface VPNPublisher {
 
-    void publish();
+    void publish() throws JCSMPException;
 }

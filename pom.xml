@@ -19,7 +19,7 @@
         <jackson-databind.version>2.14.0</jackson-databind.version>
         <mockito-core-version>4.11.0</mockito-core-version>
         <awaitility-version>4.2.0</awaitility-version>
-        <solace-messaging-client-version>1.1.0</solace-messaging-client-version>
+        <solace-jms-version>4.2.2</solace-jms-version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,9 +69,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.solace</groupId>
-            <artifactId>solace-messaging-client</artifactId>
-            <version>${solace-messaging-client-version}</version>
+            <groupId>com.solace.spring.boot</groupId>
+            <artifactId>solace-jms-spring-boot-starter</artifactId>
+            <version>${solace-jms-version}</version>
         </dependency>
     </dependencies>
 
