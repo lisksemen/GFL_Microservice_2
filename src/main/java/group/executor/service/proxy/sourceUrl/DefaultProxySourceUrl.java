@@ -50,13 +50,13 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            if (response.isSuccessful()){
-                proxySourceQueueHandler.addProxy(getProxyFromResponse(response.body().string()));
-            }
             LOGGER.info("ResponseBodyToString: " + response.body().string());
             LOGGER.info("-------------------------------------------------");
             LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response.body().string()));
             LOGGER.info("-------------------------------------------------");
+            if (response.isSuccessful()){
+                proxySourceQueueHandler.addProxy(getProxyFromResponse(response.body().string()));
+            }
         } catch (IOException e) {
             throw new RuntimeException("Message: " + e.getMessage());
         }
