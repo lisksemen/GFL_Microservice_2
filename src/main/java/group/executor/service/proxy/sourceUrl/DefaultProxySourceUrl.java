@@ -55,8 +55,6 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
             }
             LOGGER.info("ResponseBodyToString: " + response);
             LOGGER.info("-------------------------------------------------");
-            ProxyConfigHolder proxyFromResponse = getProxyFromResponse(response.body().string());
-            proxySourceQueueHandler.addProxy(proxyFromResponse);
             LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response.body().string()));
             LOGGER.info("-------------------------------------------------");
         } catch (IOException e) {
