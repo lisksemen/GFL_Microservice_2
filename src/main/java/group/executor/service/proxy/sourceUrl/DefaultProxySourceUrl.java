@@ -49,6 +49,9 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
                     .url(url)
                     .build();
             String response = client.newCall(request).execute().body().string();
+            LOGGER.info("-------------------------------------------------");
+            LOGGER.info("ResponseBodyToString: " + response);
+            LOGGER.info("-------------------------------------------------");
             ProxyConfigHolder proxyFromResponse = getProxyFromResponse(response);
             proxySourceQueueHandler.addProxy(proxyFromResponse);
             LOGGER.info("-------------------------------------------------");
