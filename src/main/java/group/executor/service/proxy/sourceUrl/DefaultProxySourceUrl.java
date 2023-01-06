@@ -57,6 +57,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
             if (response.isSuccessful()){
                 proxySourceQueueHandler.addProxy(getProxyFromResponse(response.body().string()));
             }
+            response.close();
         } catch (IOException e) {
             throw new RuntimeException("Message: " + e.getMessage());
         }
