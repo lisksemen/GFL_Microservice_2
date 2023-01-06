@@ -24,7 +24,7 @@ public class DefaultProxyValidator implements ProxyValidator {
             try {
                 ProxyNetworkConfig proxyNetworkConfig = proxyConfigHolder.getProxyNetworkConfig();
                 LOGGER.info("-------------------------------------------------");
-                LOGGER.info("ProxyFromResponse: " + proxyConfigHolder.getProxyNetworkConfig());
+                LOGGER.info("ProxyInValidator: " + proxyConfigHolder.getProxyNetworkConfig());
                 LOGGER.info("-------------------------------------------------");
                 Proxy proxy = new Proxy(Proxy.Type.HTTP,
                         new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
