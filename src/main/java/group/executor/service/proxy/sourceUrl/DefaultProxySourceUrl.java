@@ -9,6 +9,9 @@ import group.executor.model.ProxyNetworkConfig;
 import group.executor.service.handler.ProxySourceQueueHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Async;
@@ -26,7 +29,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
     private final ObjectMapper objectMapper;
     @Autowired
     private ProxySourceQueueHandler proxySourceQueueHandler;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxySourceUrl.class);
     public DefaultProxySourceUrl(ObjectMapper objectMapper, ProxySourceQueueHandler proxySourceQueueHandler) {
         this.objectMapper = objectMapper;
         this.proxySourceQueueHandler = proxySourceQueueHandler;
@@ -46,7 +49,11 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
                     .url(url)
                     .build();
             String response = client.newCall(request).execute().body().string();
-            proxySourceQueueHandler.addProxy(getProxyFromResponse(response));
+            ProxyConfigHolder proxyFromResponse = getProxyFromResponse(response);
+            proxySourceQueueHandler.addProxy(proxyFromResponse);
+            LOGGER.info("-------------------------------------------------");
+            LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response));
+            LOGGER.info("-------------------------------------------------");
         } catch (IOException e) {
             throw new RuntimeException("Message: " + e.getMessage());
         }
