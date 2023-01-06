@@ -10,6 +10,7 @@ import group.executor.service.handler.ProxySourceQueueHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
+import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +49,15 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
                     .get()
                     .url(url)
                     .build();
-            String response = client.newCall(request).execute().body().string();
-            LOGGER.info("-------------------------------------------------");
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()){
+                proxySourceQueueHandler.addProxy(getProxyFromResponse(response.body().string()));
+            }
             LOGGER.info("ResponseBodyToString: " + response);
             LOGGER.info("-------------------------------------------------");
-            ProxyConfigHolder proxyFromResponse = getProxyFromResponse(response);
+            ProxyConfigHolder proxyFromResponse = getProxyFromResponse(response.body().string());
             proxySourceQueueHandler.addProxy(proxyFromResponse);
-            LOGGER.info("-------------------------------------------------");
-            LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response));
+            LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response.body().string()));
             LOGGER.info("-------------------------------------------------");
         } catch (IOException e) {
             throw new RuntimeException("Message: " + e.getMessage());
