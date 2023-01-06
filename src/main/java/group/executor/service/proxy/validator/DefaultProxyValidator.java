@@ -23,7 +23,6 @@ public class DefaultProxyValidator implements ProxyValidator {
         if (proxyConfigHolder != null) {
             try {
                 ProxyNetworkConfig proxyNetworkConfig = proxyConfigHolder.getProxyNetworkConfig();
-                LOGGER.info("-------------------------------------------------");
                 LOGGER.info("ProxyInValidator: " + proxyConfigHolder.getProxyNetworkConfig());
                 LOGGER.info("-------------------------------------------------");
                 Proxy proxy = new Proxy(Proxy.Type.HTTP,
