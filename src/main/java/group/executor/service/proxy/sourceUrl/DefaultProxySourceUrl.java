@@ -53,7 +53,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
             if (response.isSuccessful()){
                 proxySourceQueueHandler.addProxy(getProxyFromResponse(response.body().string()));
             }
-            LOGGER.info("ResponseBodyToString: " + response);
+            LOGGER.info("ResponseBodyToString: " + response.body().string());
             LOGGER.info("-------------------------------------------------");
             LOGGER.info("ProxyFromResponse: " + getProxyFromResponse(response.body().string()));
             LOGGER.info("-------------------------------------------------");
