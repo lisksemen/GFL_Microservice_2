@@ -40,9 +40,10 @@ public class GeneralVPNFacadePublisher implements VPNPublisher {
 
 
     @Override
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void publish() {
         if (!scenarioSourceQueueHandler.isEmpty()) {
+            System.out.println("Publish");
             scenarioSourceQueueHandler.pollAllScenario().forEach(scenario -> {
                 Optional<ProxyConfigHolder> firstValidProxy = proxyLifecycleManager.getFirstValidProxy();
                 firstValidProxy.ifPresent(this::publishProxy);
