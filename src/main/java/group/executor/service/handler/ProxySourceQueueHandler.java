@@ -14,5 +14,7 @@ public interface ProxySourceQueueHandler {
     Collection<ProxyConfigHolder> pollAllProxy();
 
     boolean isEmpty();
+
+    int size();
     void removeInvalidProxy();
 }
