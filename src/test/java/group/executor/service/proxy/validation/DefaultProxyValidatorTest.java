@@ -30,7 +30,6 @@ public class DefaultProxyValidatorTest {
 
     @BeforeEach
     void setUp() throws MalformedURLException {
-        proxySourceQueueHandler = new DefaultProxySourceQueueHandler(new DefaultProxyValidator());
         OkHttpClient client = new OkHttpClient.Builder()
                 .callTimeout(5, TimeUnit.SECONDS)
                 .build();
@@ -39,10 +38,12 @@ public class DefaultProxyValidatorTest {
                 .get()
                 .url(url)
                 .build();
+        proxySourceQueueHandler = new DefaultProxySourceQueueHandler(new DefaultProxyValidator(client, request));
+
         proxySourceUrl = new DefaultProxySourceUrl(new ObjectMapper(), proxySourceQueueHandler, client, request);
         proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5", 8),
                 new ProxyCredentials());
-        proxyValidator = new DefaultProxyValidator();
+        proxyValidator = new DefaultProxyValidator(client, request);
     }
 
     @Test

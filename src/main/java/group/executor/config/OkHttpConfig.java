@@ -21,7 +21,15 @@ public class OkHttpConfig {
     }
 
     @Bean
-    @Qualifier("requestProxy")
+    @Qualifier("okHttpClientValidateProxy")
+    public OkHttpClient okHttpClientProxyValidator() {
+        return new OkHttpClient.Builder()
+                .callTimeout(1, TimeUnit.SECONDS)
+                .build();
+    }
+
+    @Bean
+    @Qualifier("testProxyRequest")
     public Request request() throws MalformedURLException {
         URL url = new URL("https://public.freeproxyapi.com/api/Proxy/ProxyByType/0/3");
         return new Request.Builder()

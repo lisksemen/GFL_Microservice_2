@@ -38,7 +38,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxySourceUrl.class);
     public DefaultProxySourceUrl(ObjectMapper objectMapper, ProxySourceQueueHandler proxySourceQueueHandler,
                                  @Qualifier("okHttpClientTestProxy") OkHttpClient okHttpClient,
-                                 @Qualifier("requestProxy") Request request) {
+                                 @Qualifier("testProxyRequest") Request request) {
         this.objectMapper = objectMapper;
         this.proxySourceQueueHandler = proxySourceQueueHandler;
         this.okHttpClient = okHttpClient;
