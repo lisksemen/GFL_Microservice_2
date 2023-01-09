@@ -29,7 +29,7 @@ public class DefaultProxyValidator implements ProxyValidator {
                         new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
                 OkHttpClient client = new OkHttpClient.Builder()
                         .proxy(proxy)
-                        .readTimeout(15, TimeUnit.SECONDS)
+                        .callTimeout(1, TimeUnit.SECONDS)
                         .build();
                 URL url = new URL("https://www.google.com");
                 Request request = new Request.Builder()

@@ -2,6 +2,8 @@ package group.executor.service.handler;
 
 import group.executor.model.ProxyConfigHolder;
 import group.executor.service.proxy.validator.ProxyValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     private final Queue<ProxyConfigHolder> proxyQueue = new LinkedBlockingQueue<>();
     private final ProxyValidator proxyValidator;
 
+    private final Logger LOGGER = LoggerFactory.getLogger(DefaultProxySourceQueueHandler.class);
     public DefaultProxySourceQueueHandler(ProxyValidator proxyValidator) {
         this.proxyValidator = proxyValidator;
     }
@@ -41,10 +44,18 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     public boolean isEmpty() {
         return proxyQueue.isEmpty();
     }
+
+    @Override
+    public int size() {
+        return proxyQueue.size();
+    }
+
     @Override
     @Scheduled(fixedRateString = "${manager.fixedRate}")
     public void removeInvalidProxy() {
         synchronized (this){
+            LOGGER.info("Started removal");
+            long start = System.currentTimeMillis();
             if(!isEmpty()){
                 for (ProxyConfigHolder proxyConfigHolder : proxyQueue) {
                     boolean valid = proxyValidator.isValid(proxyConfigHolder);
@@ -56,6 +67,9 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
                     }
                 }
             }
+            long end = System.currentTimeMillis();
+            LOGGER.info("Ended");
+            LOGGER.info("Time took - " + (end - start) + " ms");
         }
     }
 }
