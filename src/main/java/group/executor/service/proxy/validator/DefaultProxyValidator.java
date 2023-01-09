@@ -7,17 +7,24 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class DefaultProxyValidator implements ProxyValidator {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxyValidator.class);
+    private final Request request;
+
+    public DefaultProxyValidator(@Qualifier("testProxyRequest") Request request) {
+        this.request = request;
+    }
+
     @Override
     public boolean isValid(ProxyConfigHolder proxyConfigHolder) {
         if (proxyConfigHolder != null) {
@@ -29,12 +36,7 @@ public class DefaultProxyValidator implements ProxyValidator {
                         new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
                 OkHttpClient client = new OkHttpClient.Builder()
                         .proxy(proxy)
-                        .readTimeout(15, TimeUnit.SECONDS)
-                        .build();
-                URL url = new URL("https://www.google.com");
-                Request request = new Request.Builder()
-                        .get()
-                        .url(url)
+                        .callTimeout(1, TimeUnit.SECONDS)
                         .build();
                 try (Response response = client.newCall(request).execute()) {
                     if (response.isSuccessful()) {

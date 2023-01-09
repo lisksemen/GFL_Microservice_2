@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import group.executor.model.ProxyConfigHolder;
 import group.executor.model.Scenario;
-import group.executor.service.handler.ProxySourceQueueHandler;
 import group.executor.service.handler.ScenarioSourceQueueHandler;
 import group.executor.service.proxy.manager.ProxyLifecycleManager;
 import lombok.AllArgsConstructor;
@@ -40,14 +39,14 @@ public class GeneralVPNFacadePublisher implements VPNPublisher {
 
 
     @Override
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void publish() {
-        if (!scenarioSourceQueueHandler.isEmpty()) {
-            scenarioSourceQueueHandler.pollAllScenario().forEach(scenario -> {
-                Optional<ProxyConfigHolder> firstValidProxy = proxyLifecycleManager.getFirstValidProxy();
-                firstValidProxy.ifPresent(this::publishProxy);
-                publishScenario(scenario);
-            });
+        Optional<Scenario> scenarioOptional;
+        while ((scenarioOptional = scenarioSourceQueueHandler.pollScenario()).isPresent()) {
+            Scenario scenario = scenarioOptional.get();
+            Optional<ProxyConfigHolder> firstValidProxy = proxyLifecycleManager.getFirstValidProxy();
+            firstValidProxy.ifPresent(this::publishProxy);
+            publishScenario(scenario);
         }
     }
 
