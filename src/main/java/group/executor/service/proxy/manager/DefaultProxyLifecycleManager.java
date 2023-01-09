@@ -4,12 +4,9 @@ import group.executor.model.ProxyConfigHolder;
 import group.executor.service.handler.ProxySourceQueueHandler;
 import group.executor.service.proxy.validator.ProxyValidator;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Queue;
 
 @Service
 @AllArgsConstructor

@@ -13,14 +13,13 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class DefaultProxyValidator implements ProxyValidator {
 
-    private final Request request;
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxyValidator.class);
+    private final Request request;
 
     public DefaultProxyValidator(@Qualifier("testProxyRequest") Request request) {
         this.request = request;

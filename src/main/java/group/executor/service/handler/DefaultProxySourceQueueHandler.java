@@ -20,6 +20,10 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
 
     private final Logger LOGGER = LoggerFactory.getLogger(DefaultProxySourceQueueHandler.class);
 
+    public DefaultProxySourceQueueHandler(ProxyValidator proxyValidator) {
+        this.proxyValidator = proxyValidator;
+    }
+
     @Override
     @Scheduled(fixedRateString = "${manager.fixedRate}")
     public void removeInvalidProxy() {
@@ -41,10 +45,6 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
         LOGGER.info("Ended");
         LOGGER.info("Time took - " + (end - start) + " ms");
 
-    }
-
-    public DefaultProxySourceQueueHandler(ProxyValidator proxyValidator) {
-        this.proxyValidator = proxyValidator;
     }
 
     @Override

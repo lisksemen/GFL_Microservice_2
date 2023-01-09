@@ -5,5 +5,6 @@ import java.io.IOException;
 
 public interface ProxySourceFile {
     void setSourceFile(File file);
+
     void extractProxy() throws IOException;
 }
