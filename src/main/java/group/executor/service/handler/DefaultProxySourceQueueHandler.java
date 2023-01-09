@@ -19,6 +19,30 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     private final ProxyValidator proxyValidator;
 
     private final Logger LOGGER = LoggerFactory.getLogger(DefaultProxySourceQueueHandler.class);
+
+    @Override
+    @Scheduled(fixedRateString = "${manager.fixedRate}")
+    public void removeInvalidProxy() {
+
+        LOGGER.info("Started removal");
+        long start = System.currentTimeMillis();
+        if (!isEmpty()) {
+            for (ProxyConfigHolder proxyConfigHolder : proxyQueue) {
+                boolean valid = proxyValidator.isValid(proxyConfigHolder);
+                boolean networkConfig = proxyConfigHolder.getProxyNetworkConfig() != null ||
+                        proxyConfigHolder.getProxyNetworkConfig().getHostName() != null ||
+                        proxyConfigHolder.getProxyNetworkConfig().getPort() != null;
+                if (!valid || !networkConfig) {
+                    proxyQueue.remove(proxyConfigHolder);
+                }
+            }
+        }
+        long end = System.currentTimeMillis();
+        LOGGER.info("Ended");
+        LOGGER.info("Time took - " + (end - start) + " ms");
+
+    }
+
     public DefaultProxySourceQueueHandler(ProxyValidator proxyValidator) {
         this.proxyValidator = proxyValidator;
     }
@@ -48,28 +72,5 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
     @Override
     public int size() {
         return proxyQueue.size();
-    }
-
-    @Override
-    @Scheduled(fixedRateString = "${manager.fixedRate}")
-    public void removeInvalidProxy() {
-        synchronized (this){
-            LOGGER.info("Started removal");
-            long start = System.currentTimeMillis();
-            if(!isEmpty()){
-                for (ProxyConfigHolder proxyConfigHolder : proxyQueue) {
-                    boolean valid = proxyValidator.isValid(proxyConfigHolder);
-                    boolean networkConfig = proxyConfigHolder.getProxyNetworkConfig() != null ||
-                            proxyConfigHolder.getProxyNetworkConfig().getHostName() != null ||
-                            proxyConfigHolder.getProxyNetworkConfig().getPort() != null;
-                    if (!valid || !networkConfig){
-                        proxyQueue.remove(proxyConfigHolder);
-                    }
-                }
-            }
-            long end = System.currentTimeMillis();
-            LOGGER.info("Ended");
-            LOGGER.info("Time took - " + (end - start) + " ms");
-        }
     }
 }

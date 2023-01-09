@@ -24,7 +24,7 @@ public class DefaultScenarioSourceQueueHandler implements ScenarioSourceQueueHan
     }
 
     @Override
-    public Collection<Scenario> pollAllScenario() {
+    public synchronized Collection<Scenario> pollAllScenario() {
         HashSet<Scenario> result = new HashSet<>(scenarios);
         scenarios.clear();
         return result;

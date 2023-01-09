@@ -16,6 +16,7 @@ public class ScenarioSourceController {
 
     @PostMapping(value = "/scenario/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> addScenario(@RequestBody Scenario scenario) {
+        System.out.println("added");
         scenarioSourceQueueHandler.addScenario(scenario);
 
         return ResponseEntity.ok("Added successfully");
