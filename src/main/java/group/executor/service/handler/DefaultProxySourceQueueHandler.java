@@ -48,7 +48,10 @@ public class DefaultProxySourceQueueHandler implements ProxySourceQueueHandler {
             if(!isEmpty()){
                 for (ProxyConfigHolder proxyConfigHolder : proxyQueue) {
                     boolean valid = proxyValidator.isValid(proxyConfigHolder);
-                    if (!valid){
+                    boolean networkConfig = proxyConfigHolder.getProxyNetworkConfig() != null ||
+                            proxyConfigHolder.getProxyNetworkConfig().getHostName() != null ||
+                            proxyConfigHolder.getProxyNetworkConfig().getPort() != null;
+                    if (!valid || !networkConfig){
                         proxyQueue.remove(proxyConfigHolder);
                     }
                 }

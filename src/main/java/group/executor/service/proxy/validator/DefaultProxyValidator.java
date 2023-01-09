@@ -5,6 +5,8 @@ import group.executor.model.ProxyNetworkConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,11 +17,14 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class DefaultProxyValidator implements ProxyValidator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxyValidator.class);
     @Override
     public boolean isValid(ProxyConfigHolder proxyConfigHolder) {
         if (proxyConfigHolder != null) {
             try {
                 ProxyNetworkConfig proxyNetworkConfig = proxyConfigHolder.getProxyNetworkConfig();
+                LOGGER.info("ProxyInValidator: " + proxyConfigHolder.getProxyNetworkConfig());
+                LOGGER.info("-------------------------------------------------");
                 Proxy proxy = new Proxy(Proxy.Type.HTTP,
                         new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
                 OkHttpClient client = new OkHttpClient.Builder()
