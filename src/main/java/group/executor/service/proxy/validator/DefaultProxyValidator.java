@@ -19,14 +19,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class DefaultProxyValidator implements ProxyValidator {
 
-    private final OkHttpClient okHttpClient;
-
     private final Request request;
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultProxyValidator.class);
 
-    public DefaultProxyValidator(@Qualifier("okHttpClientValidateProxy") OkHttpClient okHttpClient,
-                                 @Qualifier("testProxyRequest") Request request) {
-        this.okHttpClient = okHttpClient;
+    public DefaultProxyValidator(@Qualifier("testProxyRequest") Request request) {
         this.request = request;
     }
 
@@ -39,7 +35,11 @@ public class DefaultProxyValidator implements ProxyValidator {
                 LOGGER.info("-------------------------------------------------");
                 Proxy proxy = new Proxy(Proxy.Type.HTTP,
                         new InetSocketAddress(proxyNetworkConfig.getHostName(), proxyNetworkConfig.getPort()));
-                try (Response response = okHttpClient.newCall(request).execute()) {
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .proxy(proxy)
+                        .callTimeout(1, TimeUnit.SECONDS)
+                        .build();
+                try (Response response = client.newCall(request).execute()) {
                     if (response.isSuccessful()) {
                         return true;
                     }

@@ -38,12 +38,12 @@ public class DefaultProxyValidatorTest {
                 .get()
                 .url(url)
                 .build();
-        proxySourceQueueHandler = new DefaultProxySourceQueueHandler(new DefaultProxyValidator(client, request));
+        proxySourceQueueHandler = new DefaultProxySourceQueueHandler(new DefaultProxyValidator(request));
 
         proxySourceUrl = new DefaultProxySourceUrl(new ObjectMapper(), proxySourceQueueHandler, client, request);
         proxyConfigHolderNotWorking = new ProxyConfigHolder(new ProxyNetworkConfig("103.248.120.5", 8),
                 new ProxyCredentials());
-        proxyValidator = new DefaultProxyValidator(client, request);
+        proxyValidator = new DefaultProxyValidator(request);
     }
 
     @Test
