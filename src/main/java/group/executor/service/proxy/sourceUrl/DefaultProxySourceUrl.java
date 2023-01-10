@@ -44,7 +44,7 @@ public class DefaultProxySourceUrl implements ProxySourceUrl {
     @Override
     @Scheduled(fixedRateString = "${sourceUrl.fixedRate}")
     public void sendRequest() {
-        if (proxySourceQueueHandler.size() >= 5)
+        if (proxySourceQueueHandler.size() >= 10)
             return;
 
         try {
