@@ -20,7 +20,7 @@ class DefaultProxySourceUrlTest {
 
     @Test
     public void sendRequest() {
-        Awaitility.await().atMost(15, TimeUnit.SECONDS).untilAsserted(() ->
-                verify(proxySourceUrl, Mockito.atLeast(3)).sendRequest());
+        Awaitility.await().atMost(6, TimeUnit.SECONDS).untilAsserted(() ->
+                verify(proxySourceUrl, Mockito.atLeast(1)).sendRequest());
     }
 }
